@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/neobis_Bahtiyar.iml" filepath="$PROJECT_DIR$/neobis_Bahtiyar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/neobis.iml" filepath="$PROJECT_DIR$/neobis.iml" />
     </modules>
   </component>
 </project>
