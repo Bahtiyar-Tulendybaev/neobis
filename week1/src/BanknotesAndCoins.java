@@ -4,7 +4,7 @@ public class BanknotesAndCoins {
         Scanner scan = new Scanner(System.in);
         double num = scan.nextDouble();
         int[] banknotes = {100, 50, 20, 10, 5, 2};
-        int[] coins = {505, 25, 10, 5, 1};
+        int[] coins = {50, 25, 10, 5, 1};
         System.out.println("NOTAS:");
         for(int banknote : banknotes){
             int numOfCurrBanknote = (int) (num / banknote);
@@ -15,6 +15,9 @@ public class BanknotesAndCoins {
         if(num >= 1){
             System.out.println("1 moeda(s) de R$ 1.00");
             num -= 1;
+        }
+        else{
+            System.out.println("0 moeda(s) de R$ 1.00"); // added by Asad
         }
         int n = (int)(num*100);
 
