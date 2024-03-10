@@ -1,0 +1,23 @@
+программа подключается к базе
+Методы:
+ 
+Подключается к базе данных и возвращает объект connection:
+
+       private static Connection getConnection();
+
+Получение всех данных с таблицы Product:
+
+       private static void tableProduct();
+
+Добаление данных в таблицу Product:
+
+       private static void addProduct();
+
+Удаление данных с талицы Product:
+
+        private static void deleteProduct();
+
+Обновление имени продукта по ID:
+
+         private static void updateProduct();
+
