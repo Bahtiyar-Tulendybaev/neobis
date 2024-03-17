@@ -1,0 +1,73 @@
+1. Get request: 
+ Returns all existing products:
+ @GetMapping(value="/all")
+ public List<Product> getAllProduct()
+
+ Path: GET    localhost:7777/api/v1/products/all
+ Response: 200 OK
+ result:
+
+   [
+    {
+        "id": 1,
+        "name": "Snickers",
+        "image": "snikers.img",
+        "description": "snikers is chocolate",
+        "price": 60
+    },
+    {
+        "id": 2,
+        "name": "Samsung Galaxy",
+        "image": "samsung.img",
+        "description": "samsung is mobile phone",
+        "price": 85000
+    },
+    {
+        "id": 3,
+        "name": "Iphone 15 pro",
+        "image": "iphone.img",
+        "description": "iphone is mobile phone",
+        "price": 100000
+    }
+]
+-----------------------------------------------------------------------------------
+2. Put request:
+ Changes product by id:
+ @PutMapping("/{id}")
+    public Product putProduct(@PathVariable ("id") Long id ,@RequestBody ProductDto productDto)
+Path: PUT  localhost:7777/api/v1/products/3
+
+Responce: 200 OK
+
+result:
+{
+    "id": 3,
+    "name": "Iphone 15 pro",
+    "image": "iphone.img",
+    "description": "iphone is mobile phone",
+    "price": 100000
+}
+-------------------------------------------------------------------------------------
+3. Post request:
+Adds new product
+@PostMapping("/add")
+    public ProductDto addProduct(@RequestBody ProductDto product)
+
+Path: POST  localhost:7777/api/v1/products/add
+enter in body (raw,json)
+{
+    "name": "Iphone 15 pro max",
+    "image": "iphone_max.img",
+    "description":"iphone is mobile phone",
+    "price":100000
+}
+return 200 OK
+and the product we added
+---------------------------------------------------------------------------------------
+4.Delete request:
+Deletes product by id
+@DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable ("id") Long id)
+Path: DELETE    localhost:7777/api/v1/products/3
+result:
+successfully deleted!
