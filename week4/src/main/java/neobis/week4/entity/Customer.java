@@ -1,10 +1,10 @@
 package neobis.week4.entity;
 
 
-import jakarta.persistence.*;
-import jakarta.persistence.Table;
+
 import lombok.*;
 
+import javax.persistence.*;
 
 
 
@@ -28,5 +28,10 @@ public class Customer {
 
     @Column(length = 128)
     private String password;
+
+
+    @Column(length = 128)
+    @Builder.Default
+    private String role = "USER";
 
 }

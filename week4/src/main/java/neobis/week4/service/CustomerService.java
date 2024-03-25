@@ -43,6 +43,11 @@ public class CustomerService {
        customer.setPassword(customerDto.getPassword());
         customerRepository.save(customer);
     }
+    public Customer getByEmail(String email) {
+        var customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer was not found!"));
+        return customer;
+    }
 
 
 }

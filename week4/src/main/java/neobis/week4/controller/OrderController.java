@@ -1,10 +1,7 @@
 package neobis.week4.controller;
 
-import neobis.week4.dto.CustomerDto;
 import neobis.week4.dto.OrderDto;
-import neobis.week4.entity.Customer;
 import neobis.week4.entity.Order;
-import neobis.week4.service.CustomerService;
 import neobis.week4.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

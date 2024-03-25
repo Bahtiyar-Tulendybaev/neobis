@@ -2,7 +2,7 @@ package neobis.week4.entity;
 
 
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 
