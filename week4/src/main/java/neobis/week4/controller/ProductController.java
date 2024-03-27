@@ -6,6 +6,7 @@ import neobis.week4.entity.Product;
 import neobis.week4.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ProductController {
 
 
     @GetMapping(value="/all")
+
     public List<Product> getAllProduct() {
         return productService.getAllProduct();
     }

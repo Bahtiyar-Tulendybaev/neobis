@@ -2,9 +2,7 @@ package neobis.week4.service;
 
 
 import lombok.AllArgsConstructor;
-import neobis.week4.dto.CustomerDto;
 import neobis.week4.dto.OrderDto;
-import neobis.week4.entity.Customer;
 import neobis.week4.entity.Order;
 import neobis.week4.exception.ResourceNotFoundException;
 import neobis.week4.repository.OrderRepository;
@@ -13,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

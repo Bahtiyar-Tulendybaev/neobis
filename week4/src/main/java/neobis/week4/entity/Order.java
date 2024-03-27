@@ -1,7 +1,7 @@
 package neobis.week4.entity;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 
@@ -29,8 +29,8 @@ public class Order {
     private Date dateAdd;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id")
+    private User customer;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

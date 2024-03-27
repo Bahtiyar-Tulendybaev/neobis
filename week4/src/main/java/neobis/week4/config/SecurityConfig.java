@@ -1,61 +1,59 @@
 package neobis.week4.config;
 
 import lombok.RequiredArgsConstructor;
+import neobis.week4.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 import javax.sql.DataSource;
 
 @Configuration
-@RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final DataSource dataSource;
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig  {
 
     @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+    public UserDetailsService userDetailsService(){
+        return new UserService();
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin()
-//                .loginPage("/login")
-//                .failureUrl("/login?error=true");
-//
-//        http.logout()
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/")
-//                .clearAuthentication(true)
-//                .invalidateHttpSession(true);
-//
-//
-//        http.authorizeRequests()
-//                .antMatchers("/api/v1/registration", "/api/v1/orders")
-//                .authenticated();
-//
-//        http.authorizeRequests()
-//                .anyRequest()
-//                .permitAll();
-//
-//
-//
-//
-//    }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        String fetchUsersQuery = "SELECT email, password, enabled FROM customers WHERE email = ?";
-//        String fetchRolesQuery = "SELECT email, role FROM customers WHERE email = ?";
-//        auth.jdbcAuthentication()
-////                .usersByUsernameQuery(fetchUsersQuery)
-////                .authoritiesByUsernameQuery(fetchRolesQuery)
-//                .dataSource(dataSource);
-// }
+@Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/users/add").permitAll()
+                        .requestMatchers("/api/v1/products/**","/api/v1/orders/**","/api/v1/users/**","/swagger-ui.html/**","v2/api-docs/**").authenticated())
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .build();
+}
+
+@Bean
+    public AuthenticationProvider authenticationProvider(){
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(userDetailsService());
+    provider.setPasswordEncoder(encoder());
+    return provider;
+}
+    @Bean
+    public PasswordEncoder encoder() {
+
+        return new BCryptPasswordEncoder();
+    }
     }
 
