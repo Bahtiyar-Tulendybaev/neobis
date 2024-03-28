@@ -1,5 +1,6 @@
 package neobis.week4.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String name;
-
-    private String password;
-
+public class AuthResponse {
+    @JsonProperty
+    private String token;
 }

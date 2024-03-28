@@ -4,9 +4,9 @@ package neobis.week4.service;
 import neobis.week4.config.JwtUtil;
 
 
-import neobis.week4.dto.AuthenticationResponse;
-import neobis.week4.dto.LoginRequest;
-import neobis.week4.dto.RegisterRequest;
+import neobis.week4.dto.AuthResponse;
+import neobis.week4.dto.Login;
+import neobis.week4.dto.Register;
 import neobis.week4.entity.Role;
 import neobis.week4.entity.User;
 import neobis.week4.exception.ResourceNotFoundException;
@@ -19,14 +19,10 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService  {
@@ -56,7 +52,7 @@ public ResponseEntity<User> findById(Long id) {
         return ResponseEntity.ok(user);
     }
 
-    public void register(RegisterRequest request) throws UserAlreadyExistsException {
+    public void register(Register request) throws UserAlreadyExistsException {
         User user = new User();
                 user.setName(request.getName());
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -66,7 +62,7 @@ public ResponseEntity<User> findById(Long id) {
         }
         userRepository.save(user);
     }
-    public AuthenticationResponse login(LoginRequest request) throws UserNotFoundException {
+    public AuthResponse login(Login request) throws UserNotFoundException {
         User user = userRepository.findByName(request.getEmail())
                 .orElseThrow(UserNotFoundException::new);
         authenticationManager.authenticate(
@@ -78,7 +74,7 @@ public ResponseEntity<User> findById(Long id) {
         String userEmail = user.getName();
         var jwtToken = jwtUtil.generateToken(userEmail);
         System.out.println(jwtToken);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthResponse.builder().token(jwtToken).build();
     }
 
 

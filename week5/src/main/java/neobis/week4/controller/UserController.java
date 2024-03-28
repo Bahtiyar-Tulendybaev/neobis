@@ -1,9 +1,9 @@
 package neobis.week4.controller;
 
 
-import neobis.week4.dto.AuthenticationResponse;
-import neobis.week4.dto.LoginRequest;
-import neobis.week4.dto.RegisterRequest;
+import neobis.week4.dto.AuthResponse;
+import neobis.week4.dto.Login;
+import neobis.week4.dto.Register;
 import neobis.week4.entity.User;
 
 import neobis.week4.exception.UserAlreadyExistsException;
@@ -12,7 +12,6 @@ import neobis.week4.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class UserController {
         }
 
 @PostMapping("/add")
-public ResponseEntity<?> register(@RequestBody RegisterRequest request){
+public ResponseEntity<?> register(@RequestBody Register request){
     try {
         customerService.register(request);
     }catch (UserAlreadyExistsException e){
@@ -55,8 +54,8 @@ public ResponseEntity<?> register(@RequestBody RegisterRequest request){
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request){
-        AuthenticationResponse authenticationResponse;
+    public ResponseEntity<?> login(@RequestBody Login request){
+        AuthResponse authenticationResponse;
         try {
             authenticationResponse = customerService.login(request);
         }catch (UserNotFoundException e){
