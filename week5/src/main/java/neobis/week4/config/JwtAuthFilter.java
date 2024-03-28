@@ -1,8 +1,6 @@
 package neobis.week4.config;
 
 import lombok.RequiredArgsConstructor;
-
-import neobis.week4.entity.User;
 import neobis.week4.repository.UserRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +36,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         userEmail = jwtUtil.extractUsername(jwtToken);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = (UserDetails) userRepo.findByName(userEmail).orElse(null);
-            //validate against what's in the token
             if (jwtUtil.validateToken(jwtToken, userDetails)) {
                 assert userDetails != null;
                 UsernamePasswordAuthenticationToken authToken =

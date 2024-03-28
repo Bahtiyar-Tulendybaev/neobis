@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class JwtUtil {
 
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-    private final int TOKEN_DURATION_MILLISECONDS = 10 * 1000 * 60 * 60 * 10 * 5; // temporarily 100 * 5 hours
+    private final int TOKEN_DURATION_MILLISECONDS = 10 * 1000 * 60 * 60 * 10 * 5;
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
