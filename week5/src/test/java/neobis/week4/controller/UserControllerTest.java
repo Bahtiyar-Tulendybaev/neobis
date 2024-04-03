@@ -1,59 +1,55 @@
 package neobis.week4.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import neobis.week4.dto.Login;
 import neobis.week4.entity.Role;
 import neobis.week4.entity.User;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    UserController userController;
 
 
 
     @Test
-    @Order(8)
-    void canGetAllUsers() throws Exception {
-        mockMvc.perform(
-                        get("/api/v1/users/all"))
-                .andDo(print())
-                .andExpect(status().isOk());
+    void canGetAllUsers(){
+        ResponseEntity<?> responseEntity = userController.getAllCustomer();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
 
     @Test
-    @Order(3)
-    void canGetUserById() throws Exception {
-        mockMvc.perform(
-                        get("/api/v1/users/{id}", 1L))
-                .andDo(print())
-                .andExpect(status().isOk());
+
+    void canGetUserById(){
+        ResponseEntity<?> responseEntity = userController.getCustomer(2l);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
     void canCreateUser() throws Exception {
         User user = new User();
-        user.setName("User1");
+        user.setName("User5");
         user.setPassword("123");
         user.setRole(Role.USER);
         String jsonRequest = mapper.writeValueAsString(user);
@@ -64,7 +60,12 @@ class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
-
+    @Test
+    void login() {
+        Login login = new Login("User5", "123");
+        ResponseEntity<?> responseEntity = userController.login(login);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
 
 
 

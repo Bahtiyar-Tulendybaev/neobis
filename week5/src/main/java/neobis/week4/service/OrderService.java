@@ -42,7 +42,6 @@ public class OrderService {
         Order order = new Order();
         order.setQuantity(orderDto.getQuantity());
         order.setPrice(orderDto.getPrice());
-        order.setDateAdd(orderDto.getDateAdd());
         order.setCustomer(orderDto.getCustomer());
         order.setProduct(orderDto.getProduct());
         orderRepository.save(order);

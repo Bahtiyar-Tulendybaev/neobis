@@ -2,21 +2,17 @@ package neobis.week4.service;
 
 
 import neobis.week4.config.JwtUtil;
-
-
 import neobis.week4.dto.AuthResponse;
 import neobis.week4.dto.Login;
 import neobis.week4.dto.Register;
 import neobis.week4.entity.Role;
 import neobis.week4.entity.User;
 import neobis.week4.exception.ResourceNotFoundException;
-
 import neobis.week4.exception.UserAlreadyExistsException;
 import neobis.week4.exception.UserNotFoundException;
 import neobis.week4.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
