@@ -1,0 +1,3 @@
+After running containers, database data was empty, so I had to add .sql source.
+Then, I tested app in Postman using jwt authorization.
+It worked.
