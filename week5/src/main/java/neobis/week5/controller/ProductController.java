@@ -6,11 +6,7 @@ import neobis.week5.entity.Product;
 import neobis.week5.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @RestController
@@ -22,20 +18,20 @@ public class ProductController {
 
     @GetMapping(value="/all")
 
-    public List<Product> getAllProduct() {
-        return productService.getAllProduct();
+    public ResponseEntity<?> getAllProduct() {
+        return ResponseEntity.ok().body(productService.getAllProduct());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id){
-        return productService.findById(id);
+    public ResponseEntity<?> getProduct(@PathVariable("id") Long id){
+        return ResponseEntity.ok().body( productService.findById(id));
     }
 
 
     @PostMapping("/add")
-    public ProductDto addProduct(@RequestBody ProductDto product) {
+    public ResponseEntity<?> addProduct(@RequestBody ProductDto product) {
         productService.AddNewProduct(product);
-        return product;
+        return ResponseEntity.ok().build();
 
     }
 

@@ -6,8 +6,6 @@ import lombok.Data;
 import neobis.week5.entity.User;
 import neobis.week5.entity.Product;
 
-import java.util.Date;
-
 @Data
 @Builder
 public class OrderDto {
@@ -17,7 +15,7 @@ public class OrderDto {
     private User customer;
     private Integer price;
     private Integer quantity;
-    private Date dateAdd;
+
 
 
 }

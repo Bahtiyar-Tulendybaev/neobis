@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
@@ -19,22 +16,22 @@ public class OrderController {
 
 
     @GetMapping(value="/all")
-    public List<Order> getAllOrders() {
+    public ResponseEntity<?> getAllOrders() {
 
-        return orderService.getAllOrders();
+        return ResponseEntity.ok().body( orderService.getAllOrders());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable("id") Long id){
+    public ResponseEntity<?> getOrder(@PathVariable("id") Long id){
 
-        return orderService.findById(id);
+        return ResponseEntity.ok().body(orderService.findById(id)) ;
     }
 
 
     @PostMapping("/add")
-    public OrderDto addOrder(@RequestBody OrderDto order) {
+    public ResponseEntity<?> addOrder(@RequestBody OrderDto order) {
         orderService.AddNewOrder(order);
-        return order;
+        return ResponseEntity.ok().build();
 
     }
 

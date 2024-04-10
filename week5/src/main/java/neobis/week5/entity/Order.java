@@ -4,9 +4,6 @@ package neobis.week5.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
-import java.util.Date;
-
 @Data
 @Entity
 @Table(name = "orders")
@@ -25,8 +22,7 @@ public class Order {
 
     private Integer price;
 
-    @Column
-    private Date dateAdd;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

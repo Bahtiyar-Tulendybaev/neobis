@@ -1,10 +1,10 @@
-package neobis.week4.service;
+package neobis.week5.service;
 
 
-import neobis.week4.config.MyUserDetails;
-import neobis.week4.entity.User;
-import neobis.week4.exception.ResourceNotFoundException;
-import neobis.week4.repository.UserRepository;
+import neobis.week5.config.MyUserDetails;
+import neobis.week5.entity.User;
+import neobis.week5.exception.ResourceNotFoundException;
+import neobis.week5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;

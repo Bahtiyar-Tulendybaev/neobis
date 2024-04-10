@@ -1,6 +1,6 @@
-package neobis.week4.config;
+package neobis.week5.config;
 
-import neobis.week4.entity.User;
+import neobis.week5.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

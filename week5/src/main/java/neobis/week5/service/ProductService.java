@@ -2,7 +2,6 @@ package neobis.week5.service;
 
 
 import lombok.AllArgsConstructor;
-
 import neobis.week5.dto.ProductDto;
 import neobis.week5.entity.Product;
 import neobis.week5.exception.ResourceNotFoundException;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -42,6 +40,7 @@ public class ProductService {
 
     public void AddNewProduct(ProductDto productDto) {
        Product product = new Product();
+       product.setId(productDto.getId());
        product.setName(productDto.getName());
        product.setImage(productDto.getImage());
        product.setDescription(productDto.getDescription());

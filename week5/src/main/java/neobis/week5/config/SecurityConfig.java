@@ -1,46 +1,55 @@
 package neobis.week5.config;
-
-import lombok.RequiredArgsConstructor;
-import neobis.week5.service.UserService;
+import neobis.week5.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-
-import javax.sql.DataSource;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+
 public class SecurityConfig  {
+    private  JwtAuthFilter jwtAuthFilter;
+    private final UserRepository userRepo;
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        return new UserService();
+    UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return (UserDetails) userRepo.findByName(username).orElseThrow(() -> new UsernameNotFoundException("invalid credentials"));
+            }
+        };
+    }
+
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, UserRepository userRepo) {
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.userRepo = userRepo;
     }
 
 
 @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/users/add").permitAll()
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/users/add","/api/v1/users/login").permitAll()
                         .requestMatchers("/api/v1/products/**","/api/v1/orders/**","/api/v1/users/**","/swagger-ui.html/**","v2/api-docs/**").authenticated())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .build();
+                .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+               return  http.build();
 }
 
 @Bean
@@ -54,6 +63,10 @@ public class SecurityConfig  {
     public PasswordEncoder encoder() {
 
         return new BCryptPasswordEncoder();
+    }
+@Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
     }
 

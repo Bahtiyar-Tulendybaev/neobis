@@ -1,8 +1,8 @@
-package neobis.week4.controller;
+package neobis.week5.controller;
 
-import neobis.week4.entity.User;
+import neobis.week5.entity.User;
 
-import neobis.week4.service.UserService;
+import neobis.week5.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
