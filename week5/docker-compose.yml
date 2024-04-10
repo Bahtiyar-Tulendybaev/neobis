@@ -1,0 +1,41 @@
+version: "3"
+# Define services
+services:
+  backend:
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: DockerFile
+    ports:
+      - "8877:8877"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: qwerty
+
+    networks:
+      - api
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    ports:
+      - "5433:5433"
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - api
+
+volumes:
+  postgres-data:
+
+networks:
+  api:
+
+
+
+
